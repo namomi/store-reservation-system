@@ -30,6 +30,8 @@ public class UserService {
         userRepository.save(User.createUser(userInfo, PARTNER, passwordEncoder));
     }
 
+
+
     private void validateDuplicateUser(UserInfo userInfo) {
         if (userRepository.existsByEmail(userInfo.getEmail())) {
             throw new RuntimeException("이미 가입된 회웝입니다.");

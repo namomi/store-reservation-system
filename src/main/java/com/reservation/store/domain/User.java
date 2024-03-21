@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -33,6 +35,18 @@ public class User extends BaseEntity{
     private Role role;
 
     private String phone;
+
+    @OneToMany(mappedBy = "manager", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Store> stores;
+    public List<Store> getStores() {
+        return stores;
+    }
+
+    public void setStore(Store store) {
+        this.stores.add(store);
+        store.setManager(this);
+    }
+
 
     public static User createUser(UserInfo userInfo, Role role, PasswordEncoder passwordEncoder) {
         return User.builder()
