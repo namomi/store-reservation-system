@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -36,8 +37,9 @@ public class User extends BaseEntity{
 
     private String phone;
 
+    @Builder.Default
     @OneToMany(mappedBy = "manager", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Store> stores;
+    private List<Store> stores = new ArrayList<>();
     public List<Store> getStores() {
         return stores;
     }
