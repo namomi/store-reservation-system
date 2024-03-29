@@ -20,6 +20,7 @@ public class SecurityConfig{
             // 권한 설정
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/user/register/**", "/h2-console/**").permitAll() // 경로 패턴 수정
+                    .requestMatchers("/reservation/**").authenticated()
                     .anyRequest().authenticated()
             )
             // Headers 설정
