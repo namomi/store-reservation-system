@@ -1,6 +1,5 @@
 package com.reservation.store.service;
 
-import com.reservation.store.constant.Role;
 import com.reservation.store.domain.Reservation;
 import com.reservation.store.domain.Store;
 import com.reservation.store.domain.User;
@@ -28,10 +27,8 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Optional;
 
-import static com.reservation.store.constant.Role.*;
+import static com.reservation.store.constant.Role.PARTNER;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 
