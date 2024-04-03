@@ -24,6 +24,12 @@ logging:
   level:
     org.springframework.security: DEBUG
 
+jwt :
+  secret : secretKeysecretKeysecretKeysecretKeysecretKeysecretKeysecretKeysecretKeysecretKeysecretKey
+  expiration : 3600000
+
+
+
 ---
 spring:
   config:
@@ -42,3 +48,4 @@ spring:
         show_sql: true
         format_sql: true
         dialect: org.hibernate.dialect.MySQL8Dialect
+

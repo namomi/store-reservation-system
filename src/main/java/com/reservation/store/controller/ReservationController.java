@@ -15,7 +15,7 @@ public class ReservationController {
 
     private final ReservationService reservationService;
 
-    @PostMapping("/reservation/**")
+    @PostMapping("/reservation")
     public void createReservation(@RequestBody ReservationInfo reservationInfo) {
         reservationService.createReservation(reservationInfo);
     }

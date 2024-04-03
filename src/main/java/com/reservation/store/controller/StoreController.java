@@ -15,8 +15,8 @@ public class StoreController {
 
     private final StoreService storeService;
 
-    @PostMapping("/store/register")
-    public void registerStore(@RequestBody StoreInfo storeInfo, String email) {
+    @PostMapping("/store/register/{email}")
+    public void registerStore(@RequestBody StoreInfo storeInfo, @PathVariable String email) {
         storeService.registerStore(storeInfo, email);
     }
 
