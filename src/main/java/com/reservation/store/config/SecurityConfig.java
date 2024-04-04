@@ -36,11 +36,11 @@ public class SecurityConfig{
         http
                 // CSRF 설정
                 .csrf(csrf -> csrf.ignoringRequestMatchers( "/user/register/**", "/h2-console/**", "/user/login", "/store/register/**", "/user/logout",
-                        "/reservation/**","/reviews" ))
+                        "/reservation/**","/reviews/**" ))
                 // 권한 설정
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/user/register/**", "/h2-console/**", "/user/login").permitAll() // 경로 패턴 수정
-                        .requestMatchers("/reservation/**", "/store/**", "/reservation/**", "/reviews").authenticated()
+                        .requestMatchers("/reservation/**", "/store/**", "/reservation/**", "/reviews/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(customAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

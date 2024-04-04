@@ -37,4 +37,10 @@ public class Review {
                 .rating(reviewInfo.getRating())
                 .build();
     }
+
+
+    public void updateReview(ReviewInfo reviewInfo) {
+        this.content = reviewInfo.getContent();
+        this.rating = reviewInfo.getRating();
+    }
 }

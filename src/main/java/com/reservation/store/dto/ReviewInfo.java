@@ -2,9 +2,10 @@ package com.reservation.store.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 @AllArgsConstructor
-@Getter
+@Getter@Setter
 public class ReviewInfo {
 
     private Long reservationId;

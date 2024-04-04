@@ -45,6 +45,8 @@ public class Reservation {
     }
 
     public boolean checkConfirmArrival() {
+        if (this.getReservationTime() == null) return false;
+
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime tenMinutesBefore = this.getReservationTime().minusMinutes(10);
 

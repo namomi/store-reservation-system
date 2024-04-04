@@ -20,10 +20,10 @@ public class ReservationController {
         reservationService.createReservation(reservationInfo);
     }
 
-    @PostMapping("/{reservationId}/confirmArrival")
+    @PostMapping("/reservation/{reservationId}/confirmArrival")
     public ResponseEntity<String> confirmArrival(@PathVariable Long reservationId) {
         if (reservationService.confirmArrival(reservationId)) {
-            return ResponseEntity.ok("방문이 확인되었습ㄴ다.");
+            return ResponseEntity.ok("방문이 확인되었습니다.");
         } else return ResponseEntity.badRequest().body("방문 확인이 불가능한 시간입니다.");
     }
 }
