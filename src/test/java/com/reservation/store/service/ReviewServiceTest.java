@@ -40,6 +40,9 @@ class ReviewServiceTest {
     @MockBean
     private UserRepository userRepository;
 
+    @MockBean
+    private StoreRepository storeRepository;
+
     @Autowired
     @InjectMocks
     private ReviewService reviewService;
@@ -49,27 +52,39 @@ class ReviewServiceTest {
 
     private ReviewInfo reviewInfo;
     private Reservation reservation;
+    private User user;
+    private Store store;
 
 
     @BeforeEach
     void setUp() {
-        reservation = new Reservation();
-        reservation.isConfirmed(true);
-        reviewInfo = new ReviewInfo(1L, "좋아요", 8);
+        user = createUser();
+        store = createStore(user);
 
-        when(reservationRepository.findById(reviewInfo.getReservationId())).thenReturn(Optional.of(reservation));
+        ReservationInfo reservationInfo = new ReservationInfo();
+        reservationInfo.setStoreId(1L);
+        reservationInfo.setReservationTime(LocalDateTime.now().plusDays(10));
+        reservation = createReservation(reservationInfo, user, store);
+        reservation.isConfirmed(true);
+
+
+        reviewInfo = new ReviewInfo(reservation.getId(), "좋아요", 8);
+
+
+        when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
+        when(reservationRepository.findById(reservation.getId())).thenReturn(Optional.of(reservation));
         when(reviewRepository.existsByReservationId(reviewInfo.getReservationId())).thenReturn(false);
 
     }
 
     @Test
     void createReviewTest() {
-        // given
+        //given //when
         ReviewResponseDto result = reviewService.createReview(reviewInfo);
 
-        // when, then
-        assertNotNull(result); // 생성된 리뷰의 응답이 null이 아닌지 확인
-        verify(reviewRepository, times(1)).save(any(Review.class)); // 리뷰가 저장되었는지 검증
+        // then
+        assertNotNull(result, "생성된 리뷰 응답이 null이 아니어야 합니다.");
+        verify(reviewRepository).save(any(Review.class));
     }
 
     @Test
@@ -78,14 +93,6 @@ class ReviewServiceTest {
         Long reviewId = 1L;
         String userEmail = "test@naver.com";
         ReviewInfo updatedReviewInfo = new ReviewInfo(reviewId, "맛 없어요", 3);
-
-        User user = createUser();
-        Store store = createStore(user);
-        ReservationInfo reservationInfo = new ReservationInfo();
-        reservationInfo.setStoreId(1L);
-        reservationInfo.setReservationTime(LocalDateTime.now());
-
-        Reservation reservation = createReservation(reservationInfo, user, store);
         Review review = createReview(reservation, user);
 
         when(reviewRepository.findById(reviewId)).thenReturn(Optional.of(review));
@@ -105,15 +112,7 @@ class ReviewServiceTest {
         Long reviewId = 1L;
         String userEmail = "user@example.com";
 
-
-        User user = createUser();
-        Store store = createStore(user);
-        ReservationInfo reservationInfo = new ReservationInfo();
-        reservationInfo.setStoreId(1L);
-        reservationInfo.setReservationTime(LocalDateTime.now());
-        Reservation reservation = createReservation(reservationInfo, user, store);
         Review review = Review.createReview(reviewInfo, reservation, user);
-
 
         when(reviewRepository.findById(reviewId)).thenReturn(Optional.of(review));
         when(userRepository.findByEmail(userEmail)).thenReturn(Optional.of(user));

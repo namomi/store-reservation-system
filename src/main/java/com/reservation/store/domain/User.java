@@ -3,6 +3,7 @@ package com.reservation.store.domain;
 import com.reservation.store.constant.Role;
 import com.reservation.store.dto.UserInfo;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,16 +26,19 @@ public class User extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     private String name;
 
     @Column(unique = true)
     private String email;
 
+    @NotNull
     private String password;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @NotNull
     private String phone;
 
     @Builder.Default

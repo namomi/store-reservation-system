@@ -41,12 +41,22 @@ public class Reservation {
         return Reservation.builder()
                 .user(user)
                 .store(store)
-                .reservationTime(reservationInfo.getReservationTime())
+                .reservationTime(validateReservationTime(reservationInfo.getReservationTime()))
                 .isConfirmed(false)
                 .reservationStatus(PENDING)
                 .build();
     }
 
+
+    protected static LocalDateTime validateReservationTime(LocalDateTime reservationTime) {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime tenMinutesLater = now.plusMinutes(10);
+
+        if (reservationTime.isBefore(tenMinutesLater)) {
+            throw new RuntimeException("예약은 현재 시간으로부터 최소 10분 후부터 가능합니다.");
+        }
+        return reservationTime;
+    }
     public void isConfirmed(boolean confirmed) {
         isConfirmed = confirmed;
     }
