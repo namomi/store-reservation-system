@@ -24,8 +24,8 @@ public class ReviewService {
     @Transactional
     public ReviewResponseDto createReview(ReviewInfo reviewInfo) {
         Reservation reservation = getReservation(reviewInfo);
-
-        Review review = Review.createReview(reviewInfo, reservation);
+        User user = getUser(reservation.getUser().getEmail());
+        Review review = Review.createReview(reviewInfo, reservation, user);
         reviewRepository.save(review);
 
         return ReviewResponseDto.toDto(review);

@@ -27,7 +27,10 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Optional;
 
+import static com.reservation.store.constant.ReservationStatus.APPROVED;
+import static com.reservation.store.constant.ReservationStatus.REJECTED;
 import static com.reservation.store.constant.Role.PARTNER;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
@@ -96,6 +99,33 @@ class ReservationServiceTest {
         assertTrue(result);
         verify(reservationRepository).findById(reservationId);
         verify(mockReservation).checkConfirmArrival();
+    }
+
+
+    @Test
+    void approveReservationTest() {
+        // given
+        Long reservationId = 1L;
+        Reservation reservation = new Reservation();
+        when(reservationRepository.findById(reservationId)).thenReturn(Optional.of(reservation));
+
+        // when
+        reservationService.approveReservation(reservationId);
+
+        // then
+        assertThat(reservation.getReservationStatus()).isEqualTo(APPROVED);
+    }
+
+    @Test
+    void rejectReservationTest() {
+        // 예시 코드
+        Long reservationId = 1L;
+        Reservation reservation = new Reservation();
+        when(reservationRepository.findById(reservationId)).thenReturn(Optional.of(reservation));
+
+        reservationService.rejectReservation(reservationId);
+
+        assertThat(reservation.getReservationStatus()).isEqualTo(REJECTED);
     }
 
     public User createUser() {

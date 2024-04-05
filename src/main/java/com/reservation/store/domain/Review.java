@@ -24,15 +24,20 @@ public class Review {
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     private String content;
 
     @Min(1)
     @Max(10)
     private int rating;
 
-    public static Review createReview(ReviewInfo reviewInfo, Reservation reservation) {
+    public static Review createReview(ReviewInfo reviewInfo, Reservation reservation, User user) {
         return Review.builder()
                 .reservation(reservation)
+                .user(user)
                 .content(reviewInfo.getContent())
                 .rating(reviewInfo.getRating())
                 .build();

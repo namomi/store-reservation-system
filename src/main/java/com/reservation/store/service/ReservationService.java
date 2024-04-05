@@ -14,6 +14,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.reservation.store.constant.ReservationStatus.APPROVED;
+import static com.reservation.store.constant.ReservationStatus.REJECTED;
+
 @RequiredArgsConstructor
 @Service
 public class ReservationService {
@@ -32,10 +35,24 @@ public class ReservationService {
 
     @Transactional
     public boolean confirmArrival(Long reservationId) {
-        Reservation reservation = reservationRepository.findById(reservationId)
-                .orElseThrow(() -> new RuntimeException("예약이 존재하지 않습니다."));
+        return getReservation(reservationId).checkConfirmArrival();
+    }
 
-        return reservation.checkConfirmArrival();
+    @Transactional
+    public void approveReservation(Long reservationId) {
+        Reservation reservation = getReservation(reservationId);
+        reservation.changeApprove(APPROVED);
+    }
+
+    @Transactional
+    public void rejectReservation(Long reservationId) {
+        Reservation reservation = getReservation(reservationId);
+        reservation.changeApprove(REJECTED);
+    }
+
+    private Reservation getReservation(Long reservationId) {
+        return reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new RuntimeException("예약이 존재하지 않습니다."));
     }
 
     private Store getStore(ReservationInfo reservationInfo) {

@@ -13,13 +13,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -42,9 +40,6 @@ class ReviewServiceTest {
     @MockBean
     private UserRepository userRepository;
 
-    @MockBean
-    private StoreRepository storeRepository;
-
     @Autowired
     @InjectMocks
     private ReviewService reviewService;
@@ -59,7 +54,7 @@ class ReviewServiceTest {
     @BeforeEach
     void setUp() {
         reservation = new Reservation();
-        reservation.setConfirmed(true);
+        reservation.isConfirmed(true);
         reviewInfo = new ReviewInfo(1L, "좋아요", 8);
 
         when(reservationRepository.findById(reviewInfo.getReservationId())).thenReturn(Optional.of(reservation));
@@ -91,7 +86,7 @@ class ReviewServiceTest {
         reservationInfo.setReservationTime(LocalDateTime.now());
 
         Reservation reservation = createReservation(reservationInfo, user, store);
-        Review review = createReview(reservation);
+        Review review = createReview(reservation, user);
 
         when(reviewRepository.findById(reviewId)).thenReturn(Optional.of(review));
 
@@ -110,27 +105,24 @@ class ReviewServiceTest {
         Long reviewId = 1L;
         String userEmail = "user@example.com";
 
-        User mockUser = Mockito.mock(User.class);
-        Review mockReview = Mockito.mock(Review.class);
-        Reservation mockReservation = Mockito.mock(Reservation.class);
-        Store mockStore = Mockito.mock(Store.class);
 
-        // 모의 객체 관계 설정
-        when(mockReview.getReservation()).thenReturn(mockReservation);
-        when(mockReservation.getUser()).thenReturn(mockUser);
-        when(mockUser.getEmail()).thenReturn(userEmail);
-        when(reviewRepository.findById(reviewId)).thenReturn(Optional.of(mockReview));
+        User user = createUser();
+        Store store = createStore(user);
+        ReservationInfo reservationInfo = new ReservationInfo();
+        reservationInfo.setStoreId(1L);
+        reservationInfo.setReservationTime(LocalDateTime.now());
+        Reservation reservation = createReservation(reservationInfo, user, store);
+        Review review = Review.createReview(reviewInfo, reservation, user);
 
-        // 권한 검증 로직이 있을 경우, 이를 만족시키기 위한 추가 설정
-        // 예를 들어, 리뷰의 사용자가 요청을 한 사용자와 일치하는지 확인
-        when(mockReservation.getStore()).thenReturn(mockStore);
-        when(mockStore.getManager()).thenReturn(mockUser); // 권한 검증을 위한 가정
+
+        when(reviewRepository.findById(reviewId)).thenReturn(Optional.of(review));
+        when(userRepository.findByEmail(userEmail)).thenReturn(Optional.of(user));
 
         // when
         reviewService.deleteReview(reviewId, userEmail);
 
         // then
-        verify(reviewRepository).delete(mockReview); // 리뷰가 삭제되었는지 확인
+        verify(reviewRepository).delete(review);
 
     }
 
@@ -148,7 +140,7 @@ class ReviewServiceTest {
         return Reservation.createReservation(reservationInfo, user, store);
     }
 
-    public Review createReview(Reservation reservation) {
-        return Review.createReview(new ReviewInfo(1L, "좋아요", 8), reservation);
+    public Review createReview(Reservation reservation, User user) {
+        return Review.createReview(new ReviewInfo(1L, "좋아요", 8), reservation, user);
     }
 }

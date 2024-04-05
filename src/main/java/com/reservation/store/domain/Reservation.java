@@ -1,5 +1,6 @@
 package com.reservation.store.domain;
 
+import com.reservation.store.constant.ReservationStatus;
 import com.reservation.store.dto.ReservationInfo;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+
+import static com.reservation.store.constant.ReservationStatus.*;
 
 @Getter
 @NoArgsConstructor
@@ -31,17 +34,25 @@ public class Reservation {
     private LocalDateTime reservationTime;
     private boolean isConfirmed;
 
+    @Enumerated(EnumType.STRING)
+    private ReservationStatus reservationStatus;
+
     public static Reservation createReservation(ReservationInfo reservationInfo, User user, Store store) {
         return Reservation.builder()
                 .user(user)
                 .store(store)
                 .reservationTime(reservationInfo.getReservationTime())
                 .isConfirmed(false)
+                .reservationStatus(PENDING)
                 .build();
     }
 
-    public void setConfirmed(boolean confirmed) {
+    public void isConfirmed(boolean confirmed) {
         isConfirmed = confirmed;
+    }
+
+    public void changeApprove(ReservationStatus reservationStatus) {
+        this.reservationStatus = reservationStatus;
     }
 
     public boolean checkConfirmArrival() {
@@ -51,7 +62,7 @@ public class Reservation {
         LocalDateTime tenMinutesBefore = this.getReservationTime().minusMinutes(10);
 
         if (!now.isAfter(tenMinutesBefore)) {
-            this.setConfirmed(true);
+            this.isConfirmed(true);
             return true;
         }else return false;
     }
