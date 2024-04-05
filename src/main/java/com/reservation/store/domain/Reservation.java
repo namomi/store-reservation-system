@@ -2,6 +2,7 @@ package com.reservation.store.domain;
 
 import com.reservation.store.constant.ReservationStatus;
 import com.reservation.store.dto.ReservationInfo;
+import com.reservation.store.exception.CustomException;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 import static com.reservation.store.constant.ReservationStatus.*;
+import static com.reservation.store.exception.ErrorCode.RESERVATION_TOO_SOON;
 
 @Getter
 @NoArgsConstructor
@@ -53,7 +55,7 @@ public class Reservation {
         LocalDateTime tenMinutesLater = now.plusMinutes(10);
 
         if (reservationTime.isBefore(tenMinutesLater)) {
-            throw new RuntimeException("예약은 현재 시간으로부터 최소 10분 후부터 가능합니다.");
+            throw new CustomException(RESERVATION_TOO_SOON);
         }
         return reservationTime;
     }

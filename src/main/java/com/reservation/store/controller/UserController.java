@@ -1,8 +1,6 @@
 package com.reservation.store.controller;
 
 import com.reservation.store.dto.UserInfo;
-import com.reservation.store.exception.CustomException;
-import com.reservation.store.exception.ErrorCode;
 import com.reservation.store.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
