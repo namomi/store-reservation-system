@@ -19,7 +19,7 @@ import static com.reservation.store.exception.ErrorCode.RESERVATION_TOO_SOON;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Reservation {
+public class Reservation extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,7 +43,7 @@ public class Reservation {
         return Reservation.builder()
                 .user(user)
                 .store(store)
-                .reservationTime(validateReservationTime(reservationInfo.getReservationTime()))
+                .reservationTime(validateReservationTime(reservationInfo.reservationTime()))
                 .isConfirmed(false)
                 .reservationStatus(PENDING)
                 .build();

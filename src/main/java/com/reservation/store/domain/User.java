@@ -56,11 +56,11 @@ public class User extends BaseEntity{
 
     public static User createUser(UserInfo userInfo, Role role, PasswordEncoder passwordEncoder) {
         return User.builder()
-                .name(userInfo.getName())
-                .email(userInfo.getEmail())
-                .password(passwordEncoder.encode(userInfo.getPassword()))
+                .name(userInfo.name())
+                .email(userInfo.email())
+                .password(passwordEncoder.encode(userInfo.password()))
                 .role(role)
-                .phone(userInfo.getPhone())
+                .phone(userInfo.phone())
                 .build();
     }
 }

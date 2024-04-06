@@ -134,12 +134,12 @@ public class ReviewService {
      * 해당 예약정보를 반환합니다.
      */
     private Reservation getReservation(ReviewInfo reviewInfo) {
-        Reservation reservation = reservationRepository.findById(reviewInfo.getReservationId())
+        Reservation reservation = reservationRepository.findById(reviewInfo.reservationId())
                 .orElseThrow(() -> new CustomException(RESERVATION_NOT_FOUND));
 
         if(!reservation.isConfirmed()) throw new CustomException(REVIEW_NOT_ALLOWED);
 
-        updateValidation(reviewRepository.existsByReservationId(reviewInfo.getReservationId()), REVIEW_ALREADY_EXISTS);
+        updateValidation(reviewRepository.existsByReservationId(reviewInfo.reservationId()), REVIEW_ALREADY_EXISTS);
         return reservation;
     }
 

@@ -83,7 +83,7 @@ public class StoreService {
         if (!PARTNER.equals(user.getRole())) {
             throw new CustomException(NOT_PARTNER);
         }
-        if (storeRepository.existsByLocation(storeInfo.getLocation())) {
+        if (storeRepository.existsByLocation(storeInfo.location())) {
             throw new CustomException(DUPLICATE_STORE_LOCATION);
         }
     }

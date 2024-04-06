@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    private JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenProvider jwtTokenProvider;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public CustomAuthenticationFilter(JwtTokenProvider jwtTokenProvider) {
@@ -33,7 +33,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         try {
             LoginRequest loginRequest = objectMapper.readValue(request.getInputStream(), LoginRequest.class);
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                    loginRequest.getEmail(), loginRequest.getPassword());
+                    loginRequest.email(), loginRequest.password());
 
             return this.getAuthenticationManager().authenticate(authenticationToken);
         } catch (IOException e) {

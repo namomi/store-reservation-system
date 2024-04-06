@@ -86,7 +86,7 @@ public class ReservationService {
      * 예약 정보를 받아 해당 매장이 있는지 확인 후 매장 정보를 반환합니다.
      */
     private Store getStore(ReservationInfo reservationInfo) {
-        return storeRepository.findById(reservationInfo.getStoreId())
+        return storeRepository.findById(reservationInfo.storeId())
                 .orElseThrow(() -> new CustomException(STORE_NOT_FOUND));
     }
 

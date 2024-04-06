@@ -46,14 +46,14 @@ class StoreServiceTest {
         UserInfo userInfo = createUser();
         User user = User.createUser(userInfo, PARTNER, passwordEncoder);
         when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
-        when(passwordEncoder.encode(userInfo.getPassword())).thenReturn("encodedPassword");
+        when(passwordEncoder.encode(userInfo.password())).thenReturn("encodedPassword");
 
         StoreInfo storeInfo = registerStore();
         Store store = Store.registerStore(storeInfo, user);
         when(storeRepository.findByName(store.getName())).thenReturn(Optional.of(store));
 
         //when
-        storeService.registerStore(storeInfo, userInfo.getEmail());
+        storeService.registerStore(storeInfo, userInfo.email());
 
         //then
         verify(storeRepository, times(1)).save(any(Store.class));

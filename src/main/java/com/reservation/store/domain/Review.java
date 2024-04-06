@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Getter
 @Entity
-public class Review {
+public class Review extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,14 +38,14 @@ public class Review {
         return Review.builder()
                 .reservation(reservation)
                 .user(user)
-                .content(reviewInfo.getContent())
-                .rating(reviewInfo.getRating())
+                .content(reviewInfo.content())
+                .rating(reviewInfo.rating())
                 .build();
     }
 
 
     public void updateReview(ReviewInfo reviewInfo) {
-        this.content = reviewInfo.getContent();
-        this.rating = reviewInfo.getRating();
+        this.content = reviewInfo.content();
+        this.rating = reviewInfo.rating();
     }
 }

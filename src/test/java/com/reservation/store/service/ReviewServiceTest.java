@@ -61,9 +61,8 @@ class ReviewServiceTest {
         user = createUser();
         store = createStore(user);
 
-        ReservationInfo reservationInfo = new ReservationInfo();
-        reservationInfo.setStoreId(1L);
-        reservationInfo.setReservationTime(LocalDateTime.now().plusDays(10));
+        ReservationInfo reservationInfo = new ReservationInfo(1L,LocalDateTime.now().plusDays(10));
+
         reservation = createReservation(reservationInfo, user, store);
         reservation.isConfirmed(true);
 
@@ -73,7 +72,7 @@ class ReviewServiceTest {
 
         when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
         when(reservationRepository.findById(reservation.getId())).thenReturn(Optional.of(reservation));
-        when(reviewRepository.existsByReservationId(reviewInfo.getReservationId())).thenReturn(false);
+        when(reviewRepository.existsByReservationId(reviewInfo.reservationId())).thenReturn(false);
 
     }
 

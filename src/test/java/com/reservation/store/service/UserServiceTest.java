@@ -33,7 +33,7 @@ class UserServiceTest {
 
         //when
         userService.saveCustomer(user);
-        User savedUser = userRepository.findByEmail(user.getEmail()).get();
+        User savedUser = userRepository.findByEmail(user.email()).get();
 
         //then;
         assertThat(savedUser.getName()).isEqualTo("정히나");

@@ -70,9 +70,7 @@ class ReservationServiceTest {
     @Test
     void createReservationTest() {
         // given
-        ReservationInfo reservationInfo = new ReservationInfo();
-        reservationInfo.setStoreId(1L);
-        reservationInfo.setReservationTime(LocalDateTime.now().plusDays(1));
+        ReservationInfo reservationInfo = new ReservationInfo(1L, LocalDateTime.now().plusDays(10));
 
         Store store = new Store();
         when(storeRepository.findById(1L)).thenReturn(Optional.of(store));

@@ -49,7 +49,7 @@ public class UserService {
      * 데이터베이스에 없는 정보면 에러가 나지않습니다.
      */
     private void validateDuplicateUser(UserInfo userInfo) {
-        if (userRepository.existsByEmail(userInfo.getEmail())) {
+        if (userRepository.existsByEmail(userInfo.email())) {
             throw new CustomException(DUPLICATE_USER);
         }
     }
