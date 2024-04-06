@@ -75,7 +75,7 @@ class StoreServiceTest {
         User user = User.createUser(userInfo1, PARTNER, passwordEncoder);
         StoreInfo storeInfo = registerStore();
         Store store1 = Store.registerStore(storeInfo, user);
-        Store store2 = Store.registerStore(new StoreInfo("뚜레쥬르", "서울 강남구", "베이커리"), user);;
+        Store store2 = Store.registerStore(new StoreInfo("뚜레쥬르", "서울 강남구", "베이커리"), user);
         user.setStore(store1);
         user.setStore(store2);
         when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
@@ -108,8 +108,7 @@ class StoreServiceTest {
         UserInfo userInfo1 = createUser();
         User user = User.createUser(userInfo1, PARTNER, passwordEncoder);
         StoreInfo storeInfo = registerStore();
-        Store store = Store.registerStore(storeInfo, user);
-        return store;
+        return Store.registerStore(storeInfo, user);
     }
 
     @Test

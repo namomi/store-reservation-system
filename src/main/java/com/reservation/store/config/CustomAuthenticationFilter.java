@@ -43,7 +43,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-                                            FilterChain chain, Authentication authResult) throws IOException, ServletException {
+                                            FilterChain chain, Authentication authResult) throws IOException {
         String token = jwtTokenProvider.createToken(authResult);
 
         var tokenResponse = Map.of("accessToken", token, "tokenType", "Bearer");
