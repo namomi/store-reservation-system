@@ -44,7 +44,7 @@ public class ReviewController {
             @ApiResponse(responseCode = "404", description = "사용자를 찾을 수 없습니다."),
             @ApiResponse(responseCode = "403", description = "리뷰 수정 권한이 없습니다.")
     })
-    @PutMapping("/reviews/{reviewId}")
+    @PatchMapping("/reviews/{reviewId}")
     public void updateReview(@PathVariable
                              @Positive(message = "리뷰 id를 입력해주세요.")
                              @Schema(description = "리뷰 작성시 생긴 id 값을 입력해주세요",

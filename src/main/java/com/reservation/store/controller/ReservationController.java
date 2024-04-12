@@ -40,7 +40,7 @@ public class ReservationController {
             @ApiResponse(responseCode = "200", description = "방문이 확인되었습니다."),
             @ApiResponse(responseCode = "400", description = "방문 확인이 불가능한 시간입니다.")
     })
-    @PutMapping("/reservation/{reservationId}/confirmArrival")
+    @PatchMapping("/reservation/{reservationId}/confirmArrival")
     public ResponseEntity<String> confirmArrival(@PathVariable
                                                  @Positive(message = "예약 id는 필수 입니다..")
                                                  @Schema(description = "예약 id를 적어주세요.",
@@ -58,7 +58,7 @@ public class ReservationController {
             @ApiResponse(responseCode = "200", description = "예약 확정"),
             @ApiResponse(responseCode = "404", description = "예약을 찾을 수 없습니다.")
     })
-    @PutMapping("/reservation/{reservationId}/approve")
+    @PatchMapping("/reservation/{reservationId}/approve")
     public ResponseEntity<String> approveReservation(@PathVariable
                                                      @Positive(message = "예약 id는 필수 입니다..")
                                                      @Schema(description = "예약 id를 적어주세요.",
@@ -74,7 +74,7 @@ public class ReservationController {
             @ApiResponse(responseCode = "200", description = "예약 취소"),
             @ApiResponse(responseCode = "404", description = "예약을 찾을 수 없습니다.")
     })
-    @PutMapping("/reservation/{reservationId}/reject")
+    @PatchMapping("/reservation/{reservationId}/reject")
     public ResponseEntity<String> rejectReservation(@PathVariable
                                                     @Positive(message = "예약 id는 필수 입니다..")
                                                     @Schema(description = "예약 id를 적어주세요.",
