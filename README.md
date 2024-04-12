@@ -44,11 +44,11 @@
 - `GET /store/search` : 매장명으로 매장 정보 조회
 - `GET /store/{id}` : 해당 매장 상세정보 조회
 - `POST /reservation` : 예약 등록
-- `PUT /reservation/{reservationId}/confirmArrival` : 매장 방문
-- `PUT /reservation/{reservationId}/approve` : 예약 승인
-- `PUT /reservation/{reservationId}/reject` : 예약 취소
+- `PATCH /reservation/{reservationId}/confirmArrival` : 매장 방문
+- `PATCH /reservation/{reservationId}/approve` : 예약 승인
+- `PATCH /reservation/{reservationId}/reject` : 예약 취소
 - `POST /reviews` : 리뷰 등록
-- `PUT /reviews/{reviewId}` : 리뷰 수정
+- `PATCH /reviews/{reviewId}` : 리뷰 수정
 - `DELETE /reviews/{reviewId}` : 리뷰 삭제
 
 
